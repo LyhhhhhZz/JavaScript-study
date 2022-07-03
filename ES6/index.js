@@ -1,8 +1,22 @@
 const obj = {
-    a: '1',
-    b: '2'
+    a: 1,
+    b: 2,
+    c: [1,2,3]
 }
 
-let obj1 = {}
-obj = obj1 
-console.log(obj.a)
+
+const deepFreeze = obj => {
+    Object.freeze(obj)
+    (Object.keys(obj) || []).forEach(key => {
+        if(typeof obj[key] === 'object') {
+            deepFreeze(obj[key])
+        }
+    })
+}
+
+deepFreeze(obj)
+
+obj.c = 1000
+console.log(obj)
+
+
